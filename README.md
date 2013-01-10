@@ -1,8 +1,15 @@
 Git Fu
 ======
 
-* When in a merge conflict, open all the files with conflicts in your configured editor
+Git Fu adds some custom, hopefully useful, git commands. Each command is described in detail below.
 
-  ```bash
-  git open-conflicts
-  ```
+open-conflicts
+--------------
+
+When in a merge conflict, open all the files with conflicts in your configured editor
+
+```bash
+git open-conflicts
+```
+
+It uses the editor set in git's config (`core.editor`), falling back to whatver `$EDITOR` is set to.
