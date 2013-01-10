@@ -1,0 +1,21 @@
+#!/bin/bash
+repos_path=$(git rev-parse --show-toplevel)
+
+if [[ ! -f "${repos_path}/.git/MERGE_HEAD" ]]; then
+  puts "Not on a merge"
+  exit 1
+fi
+
+editor=$(git config --get core.editor)
+
+if [[ -z $editor ]]; then
+  editor=$EDITOR
+fi
+
+files=$(git diff --name-only --diff-filter=U)
+
+if [[ $files ]]; then
+  echo $files | xargs $editor
+else
+  echo "No conflicts"
+fi
