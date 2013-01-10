@@ -1,4 +1,4 @@
-GIT-FU
+Git Fu
 ======
 
 ```bash
