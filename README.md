@@ -13,3 +13,12 @@ git open-conflicts
 ```
 
 It uses the editor set in git's config (`core.editor`), falling back to whatver `$EDITOR` is set to.
+
+purge-branches
+--------------
+
+Remove all branches that have been merged into master from both local and remote (origin).
+
+```bash
+git purge-branches
+```
