@@ -1,0 +1,8 @@
+#!/bin/bash
+repos_path=$(git rev-parse --show-toplevel)
+
+(
+	cd $repos_path
+	git prune origin
+	git gc --aggressive
+)
