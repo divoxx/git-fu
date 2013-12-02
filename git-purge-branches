@@ -10,9 +10,9 @@ ask() {
 }
 
 merged_branches() {
-  for branch in $(git branch -a --merged origin/master | grep -v master); do
+  for branch in $(git branch -a --merged origin/master | sed 's/\*//g' | grep -v master); do
     echo $branch
-  done  
+  done
 }
 
 confirm_branches() {
@@ -20,7 +20,7 @@ confirm_branches() {
   echo "All the following branches will be deleted, make sure you're ok with it."
   echo "Typing q will exit the list but it won't delete branches, you'll be asked to confirm."
   echo ""
-  
+
   for branch in $(merged_branches); do
     echo " * ${branch}"
   done
@@ -30,7 +30,7 @@ delete_branches() {
   for branch in $(merged_branches); do
     if echo $branch | grep -E "^remotes/origin" > /dev/null 2>&1; then
       local branch_name=$(basename "${branch}")
-      
+
       echo "[${branch_name}] Removing local copy of remote branch"
       git branch -dr "origin/${branch_name}"
 
@@ -51,8 +51,8 @@ abort() {
 (
   cd $repos_path
   echo "Fetching from origin"
-  git fetch origin
-  
+  git fetch origin --prune
+
   confirm_branches | less
 
   ask "Are you sure you want to delete all listed branches?"
@@ -60,6 +60,6 @@ abort() {
   if [[ $? -ne 0 ]]; then
     abort
   fi
-  
+
   delete_branches
 )
