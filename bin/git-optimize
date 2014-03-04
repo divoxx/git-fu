@@ -3,6 +3,8 @@ repos_path=$(git rev-parse --show-toplevel)
 
 (
 	cd $repos_path
-	git prune origin
+	git reflog expire --expire=1.day --all
+	git prune
 	git gc --aggressive
+	git fsck --strict --full
 )
